@@ -1,0 +1,8 @@
+{
+  "name": "BotPromo Dashboard",
+  "description": "Painel administrativo e monitoramento em tempo real do BotPromo com histórico de links e resumo de produtos.",
+  "permissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

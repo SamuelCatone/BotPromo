@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#060c1e" />
+<title>Painel de Controle · Painel do Bot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<section class="auth-gate" data-auth-gate>
+  <div class="auth-gate__panel">
+    <div class="sidebar__mark auth-gate__mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/></svg>
+    </div>
+    <span class="page-header__eyebrow">BotPromo · acesso restrito</span>
+    <div data-auth-view="signin">
+      <h1>Bem-vindo de volta</h1>
+      <p>Entre para acompanhar o monitoramento do seu bot.</p>
+      <form class="auth-form" data-auth-signin-form>
+        <label for="auth-signin-email">E-mail</label>
+        <input id="auth-signin-email" name="email" type="email" autocomplete="email" required placeholder="voce@exemplo.com">
+        <label for="auth-signin-password">Senha</label>
+        <input id="auth-signin-password" name="password" type="password" autocomplete="current-password" required placeholder="Sua senha">
+        <button class="btn btn-primary auth-gate__button" data-auth-submit type="submit">Entrar</button>
+      </form>
+      <div style="margin-top:12px; text-align:center;">
+        <button class="auth-link" data-auth-view-link="recovery" type="button">Esqueci minha senha</button>
+      </div>
+      <p class="auth-switch">Ainda não tem uma conta? <button class="auth-link" data-auth-view-link="signup" type="button">Criar conta</button></p>
+    </div>
+    <div data-auth-view="signup" hidden>
+      <h1>Crie sua conta</h1>
+      <p>Cadastre seu acesso ao painel do BotPromo.</p>
+      <form class="auth-form" data-auth-signup-form>
+        <label for="auth-signup-email">E-mail</label>
+        <input id="auth-signup-email" name="email" type="email" autocomplete="email" required placeholder="voce@exemplo.com">
+        <label for="auth-signup-password">Senha</label>
+        <input id="auth-signup-password" name="password" type="password" autocomplete="new-password" minlength="6" required placeholder="Mínimo de 6 caracteres">
+        <label for="auth-signup-confirm">Confirmar senha</label>
+        <input id="auth-signup-confirm" name="confirmPassword" type="password" autocomplete="new-password" minlength="6" required placeholder="Digite a senha novamente">
+        <button class="btn btn-primary auth-gate__button" data-auth-submit type="submit">Criar conta</button>
+      </form>
+      <p class="auth-switch">Já tem uma conta? <button class="auth-link" data-auth-view-link="signin" type="button">Entrar</button></p>
+    </div>
+    <div data-auth-view="recovery" hidden>
+      <h1>Recupere sua senha</h1>
+      <p>Enviaremos um link para você criar uma nova senha.</p>
+      <form class="auth-form" data-auth-recovery-form>
+        <label for="auth-recovery-email">E-mail</label>
+        <input id="auth-recovery-email" name="email" type="email" autocomplete="email" required placeholder="voce@exemplo.com">
+        <button class="btn btn-primary auth-gate__button" data-auth-submit type="submit">Enviar link</button>
+      </form>
+      <p class="auth-switch"><button class="auth-link" data-auth-view-link="signin" type="button">Voltar para entrar</button></p>
+    </div>
+    <div data-auth-view="update" hidden>
+      <h1>Nova senha</h1>
+      <p>Escolha uma nova senha para continuar.</p>
+      <form class="auth-form" data-auth-update-form>
+        <label for="auth-update-password">Nova senha</label>
+        <input id="auth-update-password" name="password" type="password" autocomplete="new-password" minlength="6" required placeholder="Mínimo de 6 caracteres">
+        <label for="auth-update-confirm">Confirmar nova senha</label>
+        <input id="auth-update-confirm" name="confirmPassword" type="password" autocomplete="new-password" minlength="6" required placeholder="Digite a senha novamente">
+        <button class="btn btn-primary auth-gate__button" data-auth-submit type="submit">Salvar nova senha</button>
+      </form>
+    </div>
+    <p class="auth-gate__message" data-auth-message role="status" hidden></p>
+    <p class="auth-gate__error" data-auth-error role="alert" hidden></p>
+  </div>
+</section>
+
+<div class="sidebar-overlay" data-sidebar-overlay></div>
+
+<div class="app-shell" data-app-shell hidden>
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar">
+    <div class="sidebar__brand">
+      <div class="sidebar__mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/></svg>
+      </div>
+      <div class="sidebar__brand-text">
+        <div class="sidebar__brand-name">BotPromo</div>
+        <div class="sidebar__brand-sub">painel de controle</div>
+      </div>
+    </div>
+
+    <button class="sidebar__collapse-btn" data-sidebar-collapse aria-label="Recolher menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      <span class="sidebar__collapse-label">Recolher</span>
+    </button>
+
+    <nav class="sidebar__nav" aria-label="Navegação principal">
+      <span class="sidebar__section-label">Menu</span>
+      <a class="nav-item" href="#dashboard" data-page-link="dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+        <span>Dashboard</span>
+      </a>
+      <a class="nav-item" href="#produtos" data-page-link="produtos">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span>Produtos</span>
+      </a>
+      <a class="nav-item" href="#resumo" data-page-link="resumo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+        <span>Resumo</span>
+      </a>
+      <a class="nav-item" href="#historico" data-page-link="historico">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        <span>Histórico de Links</span>
+      </a>
+      <a class="nav-item" href="#configuracoes" data-page-link="configuracoes">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+        <span>Configurações</span>
+      </a>
+    </nav>
+
+    <div class="sidebar__footer">
+      <button class="theme-toggle" data-theme-toggle type="button" aria-label="Alternar tema claro/escuro">
+        <span class="theme-toggle__track"><span class="theme-toggle__thumb"></span></span>
+        <span class="theme-toggle__label" data-theme-label>Tema escuro</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <div class="main-col">
+    <header class="topbar">
+      <div class="topbar__left">
+        <button class="menu-btn" data-menu-open aria-label="Abrir menu" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+        <div class="topbar__brand-compact">
+          <div class="topbar__brand-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <span class="topbar__brand-name">BotPromo</span>
+        </div>
+      </div>
+      <div class="topbar__right">
+        <span class="status-pill" data-status-pill>
+          <span class="status-dot"></span>
+          <span data-status-text>Verificando…</span>
+        </span>
+        <button class="btn btn-ghost auth-signout" data-auth-signout type="button" title="Sair da conta" aria-label="Sair">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          <span class="auth-signout__label">Sair</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="page">
+
+      <!-- ======================================================= -->
+      <!-- VIEW: DASHBOARD                                          -->
+      <!-- ======================================================= -->
+      <section data-view="dashboard">
+
+        <div class="page-header">
+          <div>
+            <span class="page-header__eyebrow">painel · dados</span>
+            <h1>Dashboard</h1>
+            <p class="page-header__desc">Acompanhe o status do bot e os produtos processados em tempo real.</p>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span class="kbd-hint" title="Atalho de teclado">Pressione [R] para atualizar</span>
+            <button class="btn-refresh" data-refresh-dashboard type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+              Atualizar
+            </button>
+          </div>
+        </div>
+
+        <!-- Estado de erro geral -->
+        <div class="card error-state" data-dashboard-error hidden>
+          <div class="error-state__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+          </div>
+          <div class="error-state__title">Não foi possível carregar os dados</div>
+          <div class="error-state__desc">Não foi possível consultar os dados agora. Tente novamente em instantes.</div>
+          <button class="btn btn-primary" data-retry-dashboard type="button" style="margin-top:10px;">Tentar novamente</button>
+        </div>
+
+        <div data-dashboard-content>
+          <!-- ============ CARDS PRINCIPAIS ============ -->
+          <section class="stat-grid" aria-label="Indicadores principais">
+
+            <!-- Card: Link Atual -->
+            <div class="card link-card">
+              <div class="link-card__top">
+                <div class="link-card__title-group">
+                  <div class="link-card__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                  </div>
+                  <div>
+                    <div class="link-card__label">Link atual do bot</div>
+                    <div class="link-card__title">Promoção ativa</div>
+                  </div>
+                </div>
+              </div>
+
+              <div data-skel>
+                <div class="skel" style="height:44px; border-radius:12px; margin-bottom:10px;"></div>
+                <div class="skel skel-text" style="width:40%;"></div>
+              </div>
+              <div data-real style="display:none;" data-link-card-body></div>
+            </div>
+
+            <!-- Card: Produtos Enviados -->
+            <div class="card stat-card">
+              <div class="stat-card__head">
+                <div class="stat-card__icon stat-card__icon--blue">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+                </div>
+                <div>
+                  <div class="stat-card__label">Total processado</div>
+                  <div class="stat-card__title">Produtos enviados</div>
+                </div>
+              </div>
+              <div data-skel>
+                <div class="skel skel-title" style="margin-bottom:8px;"></div>
+                <div class="skel skel-text" style="width:65%;"></div>
+              </div>
+              <div data-real style="display:none;">
+                <div class="stat-card__value" data-stat-enviados>—</div>
+                <div class="stat-card__meta">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 5 5L20 7"/></svg>
+                  Ofertas publicadas nos canais
+                </div>
+              </div>
+            </div>
+
+            <!-- Card: Produtos Disponíveis -->
+            <div class="card stat-card">
+              <div class="stat-card__head">
+                <div class="stat-card__icon stat-card__icon--green">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
+                </div>
+                <div>
+                  <div class="stat-card__label">Fila de envio</div>
+                  <div class="stat-card__title">Produtos cadastrados</div>
+                </div>
+              </div>
+              <div data-skel>
+                <div class="skel skel-title" style="margin-bottom:8px;"></div>
+                <div class="skel skel-text" style="width:65%;"></div>
+              </div>
+              <div data-real style="display:none;">
+                <div class="stat-card__value" data-stat-disponiveis>—</div>
+                <div class="stat-card__meta">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg>
+                  Aguardando disparo
+                </div>
+              </div>
+            </div>
+
+            <!-- Card: Último Envio -->
+            <div class="card stat-card">
+              <div class="stat-card__head">
+                <div class="stat-card__icon stat-card__icon--amber">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+                </div>
+                <div>
+                  <div class="stat-card__label">Atividade recente</div>
+                  <div class="stat-card__title">Último envio</div>
+                </div>
+              </div>
+              <div data-skel>
+                <div class="skel skel-title" style="margin-bottom:8px;"></div>
+                <div class="skel skel-text" style="width:50%;"></div>
+              </div>
+              <div data-real style="display:none;">
+                <div class="stat-card__value" data-stat-ultimo-envio style="font-size:20px;">—</div>
+                <div class="stat-card__meta" data-stat-ultimo-envio-meta>—</div>
+              </div>
+            </div>
+
+            <!-- Card: Tempo Ativo -->
+            <div class="card stat-card">
+              <div class="stat-card__head">
+                <div class="stat-card__icon stat-card__icon--purple">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                </div>
+                <div>
+                  <div class="stat-card__label">Sessão atual (hoje)</div>
+                  <div class="stat-card__title">Tempo ativo</div>
+                </div>
+              </div>
+              <div data-skel>
+                <div class="skel skel-title" style="margin-bottom:8px;"></div>
+                <div class="skel skel-text" style="width:50%;"></div>
+              </div>
+              <div data-real style="display:none;">
+                <div class="stat-card__value" data-stat-tempo-ativo>—</div>
+                <div class="stat-card__meta">Calculado a partir dos lotes de envio</div>
+              </div>
+            </div>
+
+          </section>
+
+          <!-- ============ TABELA: ÚLTIMOS PRODUTOS ============ -->
+          <section class="section" aria-label="Produtos enviados recentemente">
+            <div class="section__header">
+              <div>
+                <div class="section__title">Produtos enviados recentemente</div>
+                <div class="section__hint">Últimas ofertas encontradas e enviadas pelo bot</div>
+              </div>
+            </div>
+
+            <div class="card" style="overflow:hidden;">
+              
+              <!-- Toolbar: Busca, Filtro por Loja e Exportação -->
+              <div class="table-toolbar">
+                <div class="table-toolbar__search">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                  <input type="text" data-product-search placeholder="Buscar por produto ou URL... (Atalho: /)" aria-label="Buscar produtos">
+                </div>
+
+                <div class="table-toolbar__controls">
+                  <select class="select-sm" data-marketplace-filter aria-label="Filtrar por loja">
+                    <option value="todos">Todos os Marketplaces</option>
+                    <option value="mercadolivre">Mercado Livre</option>
+                    <option value="shopee">Shopee</option>
+                    <option value="amazon">Amazon</option>
+                    <option value="aliexpress">AliExpress</option>
+                    <option value="magalu">Magalu</option>
+                  </select>
+
+                  <select class="select-sm" data-recent-limit aria-label="Quantidade de itens">
+                    <option value="5">5 itens</option>
+                    <option value="10" selected>10 itens</option>
+                    <option value="25">25 itens</option>
+                    <option value="50">50 itens</option>
+                    <option value="all">Ver todos</option>
+                  </select>
+
+                  <button class="btn btn-ghost btn-sm" data-export-csv type="button" title="Exportar tabela para CSV">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Exportar CSV
+                  </button>
+                </div>
+              </div>
+
+              <!-- Skeletons da tabela -->
+              <div data-skel style="padding: 24px;">
+                <div class="skel" style="height:38px; border-radius:8px; margin-bottom:12px;"></div>
+                <div class="skel" style="height:48px; border-radius:8px; margin-bottom:10px;"></div>
+                <div class="skel" style="height:48px; border-radius:8px; margin-bottom:10px;"></div>
+                <div class="skel" style="height:48px; border-radius:8px;"></div>
+              </div>
+
+              <!-- Tabela real -->
+              <div data-real style="display:none;">
+                <div class="table-wrap" data-recent-table-wrap>
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th style="width:140px;">Marketplace</th>
+                        <th>Produto</th>
+                        <th style="width:110px;">Data</th>
+                        <th style="width:90px;">Horário</th>
+                        <th style="width:100px;">Status</th>
+                        <th style="width:90px; text-align:right;">Ações</th>
+                      </tr>
+                    </thead>
+                    <tbody data-recent-table-body></tbody>
+                  </table>
+                </div>
+
+                <div class="empty-state" data-recent-empty hidden>
+                  <div class="empty-state__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>
+                  </div>
+                  <div class="empty-state__title">Nenhum produto enviado registrado</div>
+                  <div class="empty-state__desc">Os produtos enviados aparecerão aqui automaticamente assim que o bot iniciar as publicações.</div>
+                </div>
+              </div>
+
+            </div>
+          </section>
+        </div>
+
+      </section>
+
+      <!-- ======================================================= -->
+      <!-- VIEW: PRODUTOS AGUARDANDO DISPARO                         -->
+      <!-- ======================================================= -->
+      <section data-view="produtos" hidden>
+
+        <div class="page-header">
+          <div>
+            <span class="page-header__eyebrow">fila · lote atual</span>
+            <h1>Produtos</h1>
+            <p class="page-header__desc">Produtos capturados no link atual aguardando disparo pelo robô nos canais.</p>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <button class="btn-refresh" data-refresh-produtos type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+              Atualizar
+            </button>
+            <button class="btn btn-ghost btn-sm" data-clear-produtos type="button" style="color:var(--danger);" title="Limpar todos os produtos da fila">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+              Limpar Fila
+            </button>
+          </div>
+        </div>
+
+        <!-- Barra Minimalista de Coleta Automática & Disparo -->
+        <div class="produtos-sync-bar">
+          <div class="produtos-sync-bar__info">
+            <span class="produtos-sync-bar__pulse" title="Agendamento ativo"></span>
+            <div class="produtos-sync-bar__text">
+              <strong>Coleta Automática de Produtos:</strong> ativa <strong>30 minutos antes</strong> de cada disparo programado.
+            </div>
+          </div>
+          <div class="produtos-sync-bar__actions">
+            <button class="btn btn-ghost btn-sm" data-open-category-modal type="button" title="Selecionar categorias para disparo">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/></svg>
+              Categorias
+            </button>
+            <button class="btn btn-primary btn-sm produtos-sync-bar__btn" data-trigger-produtos-webhook type="button" title="Iniciar coleta manual de produtos agora">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+              Disparar Coleta Manual
+            </button>
+          </div>
+        </div>
+
+        <!-- Barra de Categorias Escolhidas (Exibição Superior no Topo) -->
+        <div class="card produtos-active-categories-banner" data-active-categories-banner>
+          <div class="active-categories-header">
+            <div class="active-categories-title-wrap">
+              <span class="active-categories-icon">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/></svg>
+              </span>
+              <div>
+                <div class="active-categories-label">Categorias Ativas para Envio</div>
+                <div class="active-categories-sub">Exibindo as categorias selecionadas para alimentar a fila de disparo</div>
+              </div>
+            </div>
+            <div class="active-categories-actions">
+              <span class="badge badge-accent" data-active-categories-count>0 selecionadas</span>
+              <button class="btn btn-primary btn-xs" data-open-category-modal type="button" title="Abrir seleção de categorias">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                Selecionar Categorias
+              </button>
+            </div>
+          </div>
+          <div class="active-categories-list" data-active-categories-chips>
+            <span class="active-category-empty">Nenhuma categoria aplicada no momento. Clique em &quot;Selecionar Categorias&quot; para escolher as categorias que deseja enviar.</span>
+          </div>
+        </div>
+
+        <!-- Toolbar de Busca & Filtros -->
+        <div class="card produtos-toolbar-card">
+          <div class="produtos-toolbar">
+            <div class="produtos-toolbar__search-group">
+              <div class="table-toolbar__search">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <input type="text" data-produtos-search placeholder="Buscar produto na fila por nome ou link..." aria-label="Buscar produtos na fila">
+              </div>
+            </div>
+            <div class="produtos-toolbar__filter-group">
+              <select class="select-sm" data-produtos-marketplace-filter aria-label="Filtrar por loja">
+                <option value="todos">Todas as lojas</option>
+                <option value="mercadolivre">Mercado Livre</option>
+                <option value="shopee">Shopee</option>
+                <option value="amazon">Amazon</option>
+                <option value="aliexpress">AliExpress</option>
+                <option value="magalu">Magalu</option>
+              </select>
+              <div class="badge badge-primary" data-produtos-total-badge>
+                0 produtos
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skeletons da grade de produtos -->
+        <div class="produtos-grid" data-produtos-skel>
+          <div class="skel" style="height:300px; border-radius:14px;"></div>
+          <div class="skel" style="height:300px; border-radius:14px;"></div>
+          <div class="skel" style="height:300px; border-radius:14px;"></div>
+          <div class="skel" style="height:300px; border-radius:14px;"></div>
+        </div>
+
+        <!-- Grade de produtos real -->
+        <div class="produtos-grid" data-produtos-grid>
+        </div>
+
+        <!-- Estado vazio -->
+        <div class="card empty-state" data-produtos-empty hidden style="padding:48px 24px; text-align:center;">
+          <div class="empty-state__icon">
+            <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          </div>
+          <div class="empty-state__title" style="font-size:17px; font-weight:700; margin-top:12px;">Nenhum produto aguardando disparo</div>
+          <div class="empty-state__desc" style="color:var(--text-secondary); max-width:440px; margin:8px auto 0; font-size:13.5px;">A fila está limpa. Quando um link for monitorado pelo robô, os produtos extraídos aparecerão aqui.</div>
+        </div>
+
+      </section>
+
+      <!-- ======================================================= -->
+      <!-- VIEW: RESUMO ANALÍTICO                                   -->
+      <!-- ======================================================= -->
+      <section data-view="resumo" hidden>
+
+        <div class="page-header">
+          <div>
+            <span class="page-header__eyebrow">painel · dados</span>
+            <h1>Resumo de Atividades</h1>
+            <p class="page-header__desc">Desempenho consolidado do bot, distribuição horária e estatísticas de marketplace.</p>
+          </div>
+          <div class="period-control">
+            <select class="select-sm" data-resumo-filtro aria-label="Período do resumo" style="min-width: 170px; height: 38px;">
+              <option value="1" selected>Hoje (desde 00h)</option>
+              <option value="7">Últimos 7 dias</option>
+              <option value="30">Últimos 30 dias</option>
+            </select>
+          </div>
+        </div>
+
+        <section class="stat-grid" aria-label="Métricas do resumo">
+          <div class="card stat-card">
+            <div class="stat-card__head">
+              <div class="stat-card__icon stat-card__icon--blue">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+              </div>
+              <div>
+                <div class="stat-card__label">Envios no período</div>
+                <div class="stat-card__title">Total de ofertas</div>
+              </div>
+            </div>
+            <div class="stat-card__value" data-resumo-enviados>—</div>
+            <div class="stat-card__meta">Produtos processados com sucesso</div>
+          </div>
+
+          <div class="card stat-card">
+            <div class="stat-card__head">
+              <div class="stat-card__icon stat-card__icon--purple">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+              </div>
+              <div>
+                <div class="stat-card__label">Tempo em execução</div>
+                <div class="stat-card__title">Tempo total ativo</div>
+              </div>
+            </div>
+            <div class="stat-card__value" data-resumo-tempo>—</div>
+            <div class="stat-card__meta">Janela de lotes do bot</div>
+          </div>
+
+          <div class="card stat-card">
+            <div class="stat-card__head">
+              <div class="stat-card__icon stat-card__icon--green">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              </div>
+              <div>
+                <div class="stat-card__label">Ritmo médio</div>
+                <div class="stat-card__title">Produtos / hora</div>
+              </div>
+            </div>
+            <div class="stat-card__value" data-resumo-ritmo>—</div>
+            <div class="stat-card__meta">Média durante períodos ativos</div>
+          </div>
+
+          <div class="card stat-card">
+            <div class="stat-card__head">
+              <div class="stat-card__icon stat-card__icon--amber">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+              </div>
+              <div>
+                <div class="stat-card__label">Pico de atividade</div>
+                <div class="stat-card__title">Horário mais frequente</div>
+              </div>
+            </div>
+            <div class="stat-card__value" data-resumo-pico style="font-size:18px;">—</div>
+            <div class="stat-card__meta">Horário de Brasília (BRT)</div>
+          </div>
+        </section>
+
+        <!-- ============ SEÇÃO DE ESTABILIDADE & SENTINELA ============ -->
+        <div class="resumo-subhead">
+          <div class="resumo-subhead__info">
+            <h2 class="resumo-subhead__title">Estabilidade Operacional & Sentinela de Segurança</h2>
+            <p class="resumo-subhead__desc">Métricas de proteção anti-travamento, pausas da operação e intervalos sem envio na grade programada</p>
+          </div>
+          <div class="tag-chip tag-chip--live" data-resumo-status-geral-chip>
+            <span class="pulse-dot"></span>
+            <span data-resumo-status-geral-text>Monitorando</span>
+          </div>
+        </div>
+
+        <section class="stat-grid stat-grid--3" aria-label="Métricas da sentinela e estabilidade">
+          <!-- Card 1: Sentinela de Segurança -->
+          <div class="card stat-card stat-card--operacional">
+            <div class="stat-card__head">
+              <div class="stat-card__icon stat-card__icon--blue">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+              </div>
+              <div>
+                <div class="stat-card__label">Proteção Ativa</div>
+                <div class="stat-card__title">Sentinela de Segurança</div>
+              </div>
+            </div>
+            <div class="stat-card__value-row">
+              <div class="stat-card__value" data-resumo-sentinela-count>0</div>
+              <span class="tag-chip tag-chip--sm" data-resumo-sentinela-badge>Estável (0 intervenções)</span>
+            </div>
+            <div class="stat-card__meta" data-resumo-sentinela-meta>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+              <span>Disparos automáticos por inatividade &gt; 10 min</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Maior Tempo Sem Envio (na grade) -->
+          <div class="card stat-card stat-card--operacional">
+            <div class="stat-card__head">
+              <div class="stat-card__icon stat-card__icon--amber">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div>
+                <div class="stat-card__label">Grade Programada</div>
+                <div class="stat-card__title">Maior Tempo Sem Envio</div>
+              </div>
+            </div>
+            <div class="stat-card__value-row">
+              <div class="stat-card__value" data-resumo-inatividade-valor>—</div>
+              <span class="tag-chip tag-chip--sm" data-resumo-janela-badge>Grade: 08:00 às 22:00</span>
+            </div>
+            <div class="stat-card__meta" data-resumo-inatividade-meta>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4"/></svg>
+              <span>Intervalo máximo observado entre início e término</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Pausas do Bot -->
+          <div class="card stat-card stat-card--operacional">
+            <div class="stat-card__head">
+              <div class="stat-card__icon stat-card__icon--purple">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="10" y1="15" x2="10" y2="9"/><line x1="14" y1="15" x2="14" y2="9"/></svg>
+              </div>
+              <div>
+                <div class="stat-card__label">Interrupções</div>
+                <div class="stat-card__title">Pausas do Robô</div>
+              </div>
+            </div>
+            <div class="stat-card__value-row">
+              <div class="stat-card__value" data-resumo-pausas-valor>0</div>
+              <span class="tag-chip tag-chip--sm" data-resumo-pausas-badge>0 pausas</span>
+            </div>
+            <div class="stat-card__meta" data-resumo-pausas-meta>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg>
+              <span>Pausas manuais e términos de agendamento</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Gráfico e Participação por Loja -->
+        <div class="analytics-grid">
+          <div class="card chart-card">
+            <div class="chart-card__header">
+              <div>
+                <div class="chart-card__title">Distribuição Horária de Envios (24 Horas)</div>
+                <div class="chart-card__subtitle">Volume de produtos enviados por faixa de horário (00h às 23h)</div>
+              </div>
+            </div>
+            <div class="svg-chart-wrap">
+              <svg class="svg-chart" data-resumo-chart viewBox="0 0 600 180" preserveAspectRatio="none"></svg>
+            </div>
+          </div>
+
+          <div class="card chart-card">
+            <div class="chart-card__header">
+              <div>
+                <div class="chart-card__title">Marketplaces Parceiros</div>
+                <div class="chart-card__subtitle">Participação das lojas no período</div>
+              </div>
+            </div>
+            <div class="market-share-list" data-resumo-share-list>
+              <div class="link-history-loading">Carregando dados...</div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ======================================================= -->
+      <!-- VIEW: HISTÓRICO DE LINKS & ATIVAÇÃO                      -->
+      <!-- ======================================================= -->
+      <section data-view="historico" hidden>
+        <div class="page-header">
+          <div>
+            <span class="page-header__eyebrow">painel · links</span>
+            <h1>Histórico de Links & Campanhas</h1>
+            <p class="page-header__desc">Cadastre novos links, alterne o monitoramento ativo e gerencie todas as campanhas do bot.</p>
+          </div>
+        </div>
+
+        <!-- Card 1: Cadastrar e Ativar Novo Link -->
+        <section class="section link-history-section">
+          <div class="section__header">
+            <div>
+              <div class="section__title">Cadastrar e Ativar Novo Link Promocional</div>
+              <div class="section__hint">Insira o link de busca/categoria que o robô deve monitorar e enviar ofertas.</div>
+            </div>
+          </div>
+
+          <div class="card link-history-card">
+            <form class="link-history-form" data-link-form>
+              <div class="link-history-form__row">
+                <input class="link-history-input link-history-input--url" data-link-input type="url" inputmode="url" placeholder="URL da promoção: https://shopee.com.br/flash-deals ou https://mercadolivre.com.br/ofertas" autocomplete="off" required>
+                <input class="link-history-input link-history-input--tag" data-link-tag-input type="text" placeholder="Nome/Etiqueta (ex: Shopee Ofertas Tech)" autocomplete="off">
+              </div>
+              <div class="link-history-form__actions">
+                <button class="btn btn-primary link-history-submit-btn" type="submit">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+                  Ativar e Monitorar Link
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- Card 2: Todos os Links do Histórico -->
+        <section class="section">
+          <div class="section__header">
+            <div>
+              <div class="section__title">Todos os Links do Histórico</div>
+              <div class="section__hint">Clique em "Ativar" em qualquer link salvo para colocar o bot em monitoramento imediato.</div>
+            </div>
+          </div>
+
+          <div class="card link-history-card">
+            <div class="table-toolbar" style="padding: 0 0 14px 0; background: transparent;">
+              <div class="table-toolbar__search" style="max-width: 100%;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <input type="text" data-history-search placeholder="Filtrar links por nome, URL ou marketplace..." aria-label="Filtrar histórico">
+              </div>
+            </div>
+            <div class="link-history-list" data-historico-completo-list>
+              <div class="link-history-loading">Carregando histórico de links...</div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- ======================================================= -->
+      <!-- VIEW: CONFIGURAÇÕES OPERACIONAIS                         -->
+      <!-- ======================================================= -->
+      <section data-view="configuracoes" hidden>
+
+        <div class="page-header">
+          <div>
+            <span class="page-header__eyebrow">painel · configurações</span>
+            <h1>Configurações Operacionais</h1>
+            <p class="page-header__desc">Controle de envios automáticos, rotinas de disparo e preferências do sistema.</p>
+          </div>
+        </div>
+
+        <!-- Seção: Linhas Minimalistas de Configuração Operacional -->
+        <div class="settings-list">
+
+          <!-- Linha 1: Disparos Automáticos Programados -->
+          <div class="settings-row" data-open-scheduler-row style="cursor:pointer;">
+            <div class="settings-row__left">
+              <div class="settings-icon settings-icon--accent">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div class="settings-row__text">
+                <div class="settings-row__title">Disparos Automáticos Programados</div>
+                <div class="settings-row__desc">Horários diários para início e parada automática dos envios (com pré-coleta 30m antes)</div>
+              </div>
+            </div>
+            <div class="settings-row__right">
+              <span class="tag-chip" style="color:var(--accent-400); border-color:var(--border-default);">
+                <span data-timers-count>0</span> programados
+              </span>
+              <button class="btn btn-primary btn-sm" data-open-scheduler-btn type="button">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Configurar Horários
+              </button>
+              <button class="settings-row__chevron" data-open-scheduler-btn type="button" title="Abrir configuração de horários de disparo" aria-label="Abrir configuração de horários">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Linha 2: Disparo Imediato -->
+          <div class="settings-row">
+            <div class="settings-row__left">
+              <div class="settings-icon settings-icon--accent">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+              </div>
+              <div class="settings-row__text">
+                <div class="settings-row__title">Disparo Imediato</div>
+                <div class="settings-row__desc">Executa o envio imediato de ofertas sem aguardar o próximo agendamento</div>
+              </div>
+            </div>
+            <div class="settings-row__right">
+              <span class="tag-chip" data-webhook-mode-chip style="color:var(--success); border-color:var(--success-border);">Pronto</span>
+              <span data-webhook-url-display hidden></span>
+              <button class="btn btn-primary btn-sm" data-action-test type="button">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+                Disparar Agora
+              </button>
+              <button class="settings-row__chevron" data-info-trigger="disparo" type="button" title="Saiba como funciona o Disparo Imediato" aria-label="Saiba como funciona">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Linha 2.5: Sentinela de Segurança (Anti-Travamento > 10 min) -->
+          <div class="settings-row" data-watchdog-settings-row>
+            <div class="settings-row__left">
+              <div class="settings-icon" style="background:rgba(234, 179, 8, 0.12); border:1px solid rgba(234, 179, 8, 0.35); color:#facc15;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <div class="settings-row__text">
+                <div class="settings-row__title" style="display:flex; align-items:center; gap:8px;">
+                  Sentinela de Segurança (Anti-Travamento)
+                  <span class="tag-chip" data-watchdog-status-chip style="color:var(--success); border-color:var(--success-border); font-size:11px;">Monitorando</span>
+                </div>
+                <div class="settings-row__desc" data-watchdog-desc>
+                  Se o robô ficar mais de 10 minutos sem enviar produtos, aciona o Disparo Imediato automaticamente e aguarda 10 min a cada tentativa (até 5 disparos).
+                </div>
+              </div>
+            </div>
+            <div class="settings-row__right">
+              <div class="watchdog-toggle-group" style="display:flex; align-items:center; gap:10px;">
+                <span class="watchdog-toggle-label" data-watchdog-toggle-label style="font-size:12px; font-weight:600; color:var(--text-secondary);">Ativado</span>
+                <label class="switch" title="Ativar ou desativar disparo de segurança (desative durante manutenções)">
+                  <input type="checkbox" data-watchdog-toggle checked aria-label="Ativar ou desativar sentinela de segurança">
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <button class="settings-row__chevron" data-info-trigger="sentinela" type="button" title="Saiba como funciona a Sentinela de Segurança" aria-label="Saiba como funciona">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Linha 3: Pausar / Retomar -->
+          <div class="settings-row">
+            <div class="settings-row__left">
+              <div class="settings-icon settings-icon--warning">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+              </div>
+              <div class="settings-row__text">
+                <div class="settings-row__title">Pausar Operação do Robô</div>
+                <div class="settings-row__desc">Interrompe temporariamente os envios automáticos e coloca o monitoramento em espera</div>
+              </div>
+            </div>
+            <div class="settings-row__right">
+              <button class="btn btn-ghost btn-sm" data-action-stop type="button">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+                Pausar Robô
+              </button>
+              <button class="settings-row__chevron" data-info-trigger="pausar" type="button" title="Saiba como funciona a Pausa da Operação" aria-label="Saiba como funciona">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Linha 4: Limpeza da Fila -->
+          <div class="settings-row">
+            <div class="settings-row__left">
+              <div class="settings-icon settings-icon--danger">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+              </div>
+              <div class="settings-row__text">
+                <div class="settings-row__title">Limpeza da Fila de Envios</div>
+                <div class="settings-row__desc">Zera os produtos enviados e pendentes na fila para renovar o catálogo</div>
+              </div>
+            </div>
+            <div class="settings-row__right">
+              <button class="btn btn-danger btn-sm" data-action-restart type="button">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+                Limpar Fila
+              </button>
+              <button class="settings-row__chevron" data-info-trigger="limpar" type="button" title="Saiba como funciona a Limpeza da Fila" aria-label="Saiba como funciona">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- MODAL DEDICADO: CONFIGURAR HORÁRIOS DE DISPARO (AGENDADOR RESPONSIVO)     -->
+<!-- ========================================================================= -->
+<div class="modal-overlay" data-scheduler-modal>
+  <div class="modal modal--scheduler" role="dialog" aria-modal="true" aria-labelledby="scheduler-modal-title">
+    <div class="modal__header" style="padding-bottom:14px; border-bottom:1px solid var(--border-subtle); margin-bottom:14px;">
+      <div class="modal__icon-wrap">
+        <div class="settings-icon settings-icon--accent" style="width:38px; height:38px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+      </div>
+      <div style="min-width:0; flex:1;">
+        <h3 class="modal__title" id="scheduler-modal-title" style="margin:0; font-size:16px; font-weight:800;">Configurar Horários de Disparo</h3>
+        <div class="modal__subtitle" style="font-size:12px; color:var(--text-secondary); margin-top:2px;">Defina os horários diários de início e término automático (com pré-coleta 30m antes)</div>
+      </div>
+      <div class="scheduler-modal-header-right">
+        <div class="timer-live-clock" title="Horário de Brasília">
+          <span class="timer-live-clock__dot"></span>
+          <span data-live-brasilia-clock>--:--:--</span>
+        </div>
+        <button class="modal__close-btn" data-scheduler-close type="button" aria-label="Fechar modal">&times;</button>
+      </div>
+    </div>
+
+    <div class="modal__content" style="padding:0;">
+      <!-- Bloco 1: Formulário de Adicionar Programação -->
+      <div class="scheduler-card">
+        <div class="scheduler-card__heading">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+          Adicionar Nova Programação Diária
+        </div>
+        <form class="timer-form-compact" data-timer-form>
+          <div class="timer-input-group">
+            <label for="timer-start-select">
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:-1px; color:var(--success);"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Iniciar Disparo
+            </label>
+            <select class="input timer-select" id="timer-start-select" data-timer-start-select required>
+              <!-- Preenchido dinamicamente com 30 em 30 min -->
+            </select>
+          </div>
+          <div class="timer-input-group">
+            <label for="timer-end-select">
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block; vertical-align:-1px; color:var(--danger);"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+              Parar Robô (Limpar Fila)
+            </label>
+            <select class="input timer-select" id="timer-end-select" data-timer-end-select>
+              <!-- Preenchido dinamicamente com 30 em 30 min -->
+            </select>
+          </div>
+          <div class="timer-input-group timer-input-group--name">
+            <label for="timer-name-input">Identificação / Nome (opcional)</label>
+            <input class="input" id="timer-name-input" data-timer-name-input type="text" placeholder="Ex: Disparo da Tarde" autocomplete="off" />
+          </div>
+          <button class="btn btn-primary timer-submit-btn" type="submit" data-timer-submit-btn>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            Salvar
+          </button>
+        </form>
+      </div>
+
+      <!-- Bloco 2: Lista de Horários Ativos Salvos -->
+      <div class="scheduler-card" style="margin-top:14px;">
+        <div class="timer-list-header">
+          <div class="timer-list-title">Horários Cadastrados (<span data-timers-count>0</span>)</div>
+          <button class="btn btn-ghost btn-sm" data-timers-refresh-btn type="button" style="font-size:12px; padding:4px 8px;">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2v6h-6M3 12a9 9 0 0 1 15-6.7L21 8M3 22v-6h6M21 12a9 9 0 0 1-15 6.7L3 16"/></svg>
+            Atualizar
+          </button>
+        </div>
+        <div class="timer-list" data-timers-list>
+          <div class="timer-empty">Carregando horários cadastrados...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- MODAL DEDICADO: SELECIONAR CATEGORIAS PARA ENVIO (100% RESPONSIVO)        -->
+<!-- ========================================================================= -->
+<div class="modal-overlay" data-category-modal>
+  <div class="modal modal--category" role="dialog" aria-modal="true" aria-labelledby="category-modal-title">
+    <div class="modal__header" style="padding-bottom:14px; border-bottom:1px solid var(--border-subtle); margin-bottom:14px;">
+      <div class="modal__icon-wrap">
+        <div class="settings-icon settings-icon--accent" style="width:38px; height:38px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/></svg>
+        </div>
+      </div>
+      <div style="min-width:0; flex:1;">
+        <h3 class="modal__title" id="category-modal-title" style="margin:0; font-size:16px; font-weight:800;">Selecionar Categorias para Envio</h3>
+        <div class="modal__subtitle" style="font-size:12px; color:var(--text-secondary); margin-top:2px;">Escolha as categorias para envio. Os produtos são salvos e intercalados alternadamente (1 de cada categoria por vez) na tabela de disparo.</div>
+      </div>
+      <button class="modal__close-btn" data-category-close type="button" aria-label="Fechar modal">&times;</button>
+    </div>
+
+    <div class="modal__content" style="padding:0;">
+      <div class="category-modal-body">
+        <div class="category-selector__head">
+          <div class="category-selector__title">
+            <span>Categorias Disponíveis</span>
+            <span class="badge badge-subtle" data-total-available-categories>Carregando...</span>
+          </div>
+          <div class="category-selector__quick-actions">
+            <button type="button" class="btn-link-action" data-select-all-cats>Marcar todas</button>
+            <span class="divider-dot">•</span>
+            <button type="button" class="btn-link-action" data-clear-all-cats>Desmarcar todas</button>
+          </div>
+        </div>
+
+        <!-- Barra de Quantidade Rápida em Lote -->
+        <div class="category-quick-qty-bar">
+          <div class="category-quick-qty-title">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+            <span>Qtd. rápida por categoria:</span>
+          </div>
+          <div class="category-quick-qty-actions">
+            <button type="button" class="btn-qty-preset" data-preset-qty="2">2 cada</button>
+            <button type="button" class="btn-qty-preset is-active" data-preset-qty="5">5 cada</button>
+            <button type="button" class="btn-qty-preset" data-preset-qty="10">10 cada</button>
+            <button type="button" class="btn-qty-preset" data-preset-qty="20">20 cada</button>
+            <button type="button" class="btn-qty-preset" data-preset-qty="all">Todos</button>
+          </div>
+        </div>
+
+        <!-- Grade de Categorias com Seleção Individual de Quantidade -->
+        <div class="category-chips-grid" data-category-chips-container>
+          <div class="skel" style="height:56px; border-radius:10px;"></div>
+          <div class="skel" style="height:56px; border-radius:10px;"></div>
+        </div>
+
+        <div class="category-selector__footer">
+          <label class="category-selector__checkbox-label">
+            <input type="checkbox" data-replace-queue-checkbox checked>
+            <span>Substituir produtos anteriores na fila de disparo</span>
+          </label>
+          <div class="category-summary-live" data-category-summary-live>
+            <span class="category-summary-badge" data-category-summary-count>0 produtos selecionados</span>
+          </div>
+        </div>
+
+        <div class="category-feedback-msg" data-category-feedback hidden></div>
+      </div>
+    </div>
+
+    <div class="modal__footer" style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px; padding-top:14px; border-top:1px solid var(--border-subtle);">
+      <button class="btn btn-ghost btn-sm" data-category-close type="button">Cancelar</button>
+      <button class="btn btn-primary btn-sm" data-apply-categories-btn type="button">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <span>Aplicar e Atualizar Fila</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="/app.js"></script>
+<script>document.addEventListener('DOMContentLoaded', () => window.ThemeController && window.ThemeController.init());</script>
+</body>
+</html>
